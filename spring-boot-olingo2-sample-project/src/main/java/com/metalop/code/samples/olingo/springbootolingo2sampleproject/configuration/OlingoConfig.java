@@ -9,28 +9,51 @@ import javax.sql.DataSource;
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 
+import com.zaxxer.hikari.HikariDataSource;
+
+import io.pivotal.cfenv.core.CfCredentials;
+import io.pivotal.cfenv.jdbc.CfJdbcEnv;
+
 @Configuration
+@Profile("cloud")
 @ComponentScan(basePackages = "com.metalop.code.samples.olingo.springbootolingo2sampleproject")
 public class OlingoConfig {
 
 	private static final Logger LOG = LoggerFactory.getLogger(OlingoConfig.class);
 
-	@Autowired
-	DataSource dataSource;
+	CfJdbcEnv cfJdbcEnv = new CfJdbcEnv();
+	DataSourceProperties properties = new DataSourceProperties();
+	CfCredentials hanaCredentials = cfJdbcEnv.findCredentialsByTag("hana");
+
+	@Bean
+	public DataSource dataSource() {
+
+		String username = hanaCredentials.getUsername();
+		String password = hanaCredentials.getPassword();
+
+		String url = hanaCredentials.getUriInfo().toString();
+
+		return DataSourceBuilder.create().type(HikariDataSource.class)
+				.driverClassName(com.sap.db.jdbc.Driver.class.getName()).url(url).username(username).password(password)
+				.build();
+
+	}
 
 	@Bean
 	public EntityManagerFactory entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean springEMF = new LocalContainerEntityManagerFactoryBean();
 		springEMF.setJpaVendorAdapter(new EclipseLinkJpaVendorAdapter());
-		springEMF.setDataSource(dataSource);
+		springEMF.setDataSource(dataSource());
 		springEMF.afterPropertiesSet();
 		return springEMF.getObject();
 

@@ -14,7 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-olingo2-sample-project</name>
 	<description>Starter Project for Olingo 2 and Spring Boot</description>
-
+	<packaging>jar</packaging>
 	<properties>
 		<java.version>1.8</java.version>
 		<eclipselink.version>2.6.4</eclipselink.version>
@@ -104,6 +104,18 @@
 
 		</dependency>
 
+		<dependency>
+			<groupId>io.pivotal.cfenv</groupId>
+			<artifactId>java-cfenv-boot</artifactId>
+			<version>2.1.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sap.cloud.db.jdbc</groupId>
+			<artifactId>ngdbc</artifactId>
+			<version>2.6.28</version>
+		</dependency>
+
 		<!-- Spring JPA. Since, we are using eclipse link JPA. We exclude default 
 			hibernate JPA. -->
 		<dependency>
@@ -168,8 +180,11 @@
 	</dependencies>
 	<build>
 
-
 		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 			<plugin>
 				<groupId>de.empulse.eclipselink</groupId>
 				<artifactId>staticweave-maven-plugin</artifactId>
