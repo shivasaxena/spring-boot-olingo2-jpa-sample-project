@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -42,7 +43,7 @@ public class OlingoConfig {
 		String password = hanaCredentials.getPassword();
 
 		String url = hanaCredentials.getUriInfo().toString();
-
+		
 		return DataSourceBuilder.create().type(HikariDataSource.class)
 				.driverClassName(com.sap.db.jdbc.Driver.class.getName()).url(url).username(username).password(password)
 				.build();
@@ -54,6 +55,12 @@ public class OlingoConfig {
 		LocalContainerEntityManagerFactoryBean springEMF = new LocalContainerEntityManagerFactoryBean();
 		springEMF.setJpaVendorAdapter(new EclipseLinkJpaVendorAdapter());
 		springEMF.setDataSource(dataSource());
+		Map<String, String> props = new HashMap<String, String>();
+		props.put(PersistenceUnitProperties.DDL_GENERATION, "create-tables");
+		props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, "database");
+		props.put("eclipselink.target-database", "HANA");
+
+		springEMF.setJpaPropertyMap(props);
 		springEMF.afterPropertiesSet();
 		return springEMF.getObject();
 

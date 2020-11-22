@@ -7,7 +7,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 @ServletComponentScan
-
 public class SpringBootOlingo2SampleProjectApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

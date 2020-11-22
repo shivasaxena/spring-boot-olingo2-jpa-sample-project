@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class JPAServiceFactory extends ODataJPAServiceFactory {
 
-	private static final String PERSISTENT_UNIT = "detault";
+	private static final String PERSISTENT_UNIT = "default";
 	private static final String EMF = "entityManagerFactory";
 
 	private static final Logger LOG = LoggerFactory.getLogger(JPAServiceFactory.class);
@@ -19,7 +19,7 @@ public class JPAServiceFactory extends ODataJPAServiceFactory {
 	public ODataJPAContext initializeODataJPAContext() throws ODataJPARuntimeException {
 		ODataJPAContext oDataJPACtx = getODataJPAContext();
 		EntityManagerFactory emf = (EntityManagerFactory) SpringContextUtil.getBean(EMF);
-		LOG.debug("EMF in JPAservicefactory " + emf);
+		LOG.info("EMF in JPAservicefactory " + emf);
 		oDataJPACtx.setEntityManagerFactory(emf);
 		oDataJPACtx.setPersistenceUnitName(PERSISTENT_UNIT);
 		oDataJPACtx.setDefaultNaming(true);

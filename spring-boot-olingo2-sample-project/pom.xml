@@ -67,6 +67,15 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- spring cloud service connector for CF -->
+		<!-- For deployment in cloud foundry -->
+
+		<!-- HANA service connector for connecting to HANA Service in SAP CF. -->
+		<dependency>
+			<groupId>com.sap.hana.cloud</groupId>
+			<artifactId>spring-cloud-cloudfoundry-hana-service-connector</artifactId>
+			<version>1.0.4.RELEASE</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.olingo</groupId>
 			<artifactId>olingo-odata2-core</artifactId>
@@ -185,30 +194,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>de.empulse.eclipselink</groupId>
-				<artifactId>staticweave-maven-plugin</artifactId>
-				<version>1.0.0</version>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>weave</goal>
-						</goals>
-						<configuration>
-							<persistenceXMLLocation>META-INF/persistence.xml</persistenceXMLLocation>
-							<logLevel>FINE</logLevel>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.eclipse.persistence</groupId>
-						<artifactId>org.eclipse.persistence.jpa</artifactId>
-						<version>2.7.7</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+			<!-- <plugin> <groupId>de.empulse.eclipselink</groupId> <artifactId>staticweave-maven-plugin</artifactId> 
+				<version>1.0.0</version> <executions> <execution> <phase>process-classes</phase> 
+				<goals> <goal>weave</goal> </goals> <configuration> <persistenceXMLLocation>META-INF/persistence.xml</persistenceXMLLocation> 
+				<logLevel>FINE</logLevel> </configuration> </execution> </executions> <dependencies> 
+				<dependency> <groupId>org.eclipse.persistence</groupId> <artifactId>org.eclipse.persistence.jpa</artifactId> 
+				<version>2.7.7</version> </dependency> </dependencies> </plugin> -->
 		</plugins>
 		<pluginManagement>
 

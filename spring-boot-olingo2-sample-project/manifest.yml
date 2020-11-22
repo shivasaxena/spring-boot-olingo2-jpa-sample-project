@@ -7,4 +7,4 @@ applications:
   env:
     SPRING_PROFILES_ACTIVE: cloud
   services: 
-    - hana-cloud-service
+    - hana-trial-hdi-service
