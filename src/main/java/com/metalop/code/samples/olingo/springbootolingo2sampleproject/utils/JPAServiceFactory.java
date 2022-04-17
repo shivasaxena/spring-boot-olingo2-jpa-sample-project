@@ -24,7 +24,7 @@ public class JPAServiceFactory extends ODataJPAServiceFactory {
 		oDataJPACtx.setPersistenceUnitName(PERSISTENT_UNIT);
 		oDataJPACtx.setDefaultNaming(true);
 		emf.getPersistenceUnitUtil();
-		this.setDetailErrors(true);
+		oDataJPACtx.getODataContext().setDebugMode(true);
 		return oDataJPACtx;
 	}
 

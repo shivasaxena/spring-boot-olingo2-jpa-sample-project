@@ -2,6 +2,7 @@ package com.metalop.code.samples.olingo.springbootolingo2sampleproject.configura
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -29,8 +30,12 @@ public class OlingoConfig {
 	@Bean
 	public EntityManagerFactory entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean springEMF = new LocalContainerEntityManagerFactoryBean();
-		springEMF.setJpaVendorAdapter(new EclipseLinkJpaVendorAdapter());
+		EclipseLinkJpaVendorAdapter jpaVendorAdapter = new EclipseLinkJpaVendorAdapter();
+		springEMF.setJpaVendorAdapter(jpaVendorAdapter);
 		springEMF.setDataSource(dataSource);
+		Properties props = new Properties();
+		props.setProperty("eclipselink.logging.level", "FINE");
+		springEMF.setJpaProperties(props);
 		springEMF.afterPropertiesSet();
 		return springEMF.getObject();
 
