@@ -1,5 +1,6 @@
 package com.metalop.code.samples.olingo.springbootolingo2sampleproject.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
@@ -14,17 +15,17 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.metalop.code.samples.olingo.springbootolingo2sampleproject.utils.custom_adapters.LocalDateTimeXmlAdapter;
 
 @Entity
-public class Student {
+public class Student implements Serializable {
 
-	
+	private static final long serialVersionUID = 2099210331402174566L;
+
 	@Id
 	@Column
 	String studentID;
 
 	@Column
 	String name;
-	
-	
+
 	@Column
 	LocalDateTime dateOfJoining;
 
